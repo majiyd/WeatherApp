@@ -2,7 +2,7 @@
   "name": "weatherApp",
   "displayName": "Weather App",
   "expo": {
-    "name": "WeatherApp",
+    "name": "Weather App",
     "slug": "expo-template-bare",
     "privacy": "unlisted",
     "sdkVersion": "34.0.0",
