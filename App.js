@@ -3,10 +3,10 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View,
-  TextInput,
   KeyboardAvoidingView
 } from "react-native";
+
+import SearchInput from "./components/SearchInput";
 
 export default class App extends Component {
   render() {
@@ -18,12 +18,7 @@ export default class App extends Component {
           25°
         </Text>
 
-        <TextInput
-          placeholder="Search any city"
-          placeholderTextColor="white"
-          style={styles.textInput}
-          clearButtonMode="always"
-        />
+        <SearchInput placeholder={"Type any city"}/>
       </KeyboardAvoidingView>
     );
   }
@@ -56,15 +51,6 @@ const styles = StyleSheet.create({
   },
   redText: {
     color: "red"
-  },
-  textInput: {
-    backgroundColor: "#666",
-    color: "white",
-    height: 40,
-    width: 300,
-    marginTop: 20,
-    marginHorizontal: 20,
-    paddingHorizontal: 20,
-    alignSelf: "center"
   }
+  
 });
