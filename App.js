@@ -3,7 +3,8 @@ import {
   Platform,
   StyleSheet,
   Text,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  ImageBackground
 } from "react-native";
 
 import SearchInput from "./components/SearchInput";
@@ -12,13 +13,19 @@ export default class App extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <Text style={[styles.textStyle, styles.largeText]}>San Francisco</Text>
-        <Text style={[styles.textStyle, styles.smallText]}>Light Showers</Text>
-        <Text style={[styles.textStyle, styles.largeText, styles.redText]}>
-          25°
-        </Text>
+        <ImageBackground 
+          source={require("./assets/bg.jpg") }
+          style={styles.backgroundImageStyle}
+        >
+          <Text style={[styles.textStyle, styles.largeText]}>San Francisco</Text>
+          <Text style={[styles.textStyle, styles.smallText]}>Light Showers</Text>
+          <Text style={[styles.textStyle, styles.largeText, styles.redText]}>
+            25°
+          </Text>
 
-        <SearchInput placeholder={"Type any city"}/>
+          <SearchInput placeholder={"Type any city"}/>
+        </ImageBackground>
+        
       </KeyboardAvoidingView>
     );
   }
@@ -51,6 +58,15 @@ const styles = StyleSheet.create({
   },
   redText: {
     color: "red"
+  },
+  backgroundImageStyle: {
+    flex: 1,
+    resizeMode: "cover",
+    backgroundColor: '#ccc',
+    width: '100%',
+    height: '100%',
+    justifyContent: "center",
+    alignItems: "center",
   }
   
 });
