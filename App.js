@@ -4,7 +4,9 @@ import {
   StyleSheet,
   Text,
   KeyboardAvoidingView,
-  ImageBackground
+  ImageBackground,
+  ActivityIndicator,
+  StatusBar
 } from "react-native";
 
 import SearchInput from "./components/SearchInput";
@@ -13,11 +15,18 @@ export default class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      location: "San Francisco"
+      location: "",
+      loading: false,
+      errors: null,
+      temperature: 0,
+      weather: ''
     }
   }
+  componentDidMount = () => {
+    this.updateLocation('San Francisco')
+    this.setState({weather: "clear"})
+  }
   updateLocation = city => {
-    console.log(city);
     this.setState({location: city})
   }
   render() {
@@ -25,7 +34,7 @@ export default class App extends Component {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <ImageBackground 
-          source={require("./assets/bg.jpg") }
+          source={require("./assets/clear.jpg") }
           style={styles.backgroundImageStyle}
         >
           <Text style={[styles.textStyle, styles.largeText]}>{location}</Text>
