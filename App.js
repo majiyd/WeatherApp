@@ -10,20 +10,34 @@ import {
 import SearchInput from "./components/SearchInput";
 
 export default class App extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      location: "San Francisco"
+    }
+  }
+  updateLocation = city => {
+    console.log(city);
+    this.setState({location: city})
+  }
   render() {
+    const {location} = this.state
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <ImageBackground 
           source={require("./assets/bg.jpg") }
           style={styles.backgroundImageStyle}
         >
-          <Text style={[styles.textStyle, styles.largeText]}>San Francisco</Text>
+          <Text style={[styles.textStyle, styles.largeText]}>{location}</Text>
           <Text style={[styles.textStyle, styles.smallText]}>Light Showers</Text>
           <Text style={[styles.textStyle, styles.largeText, styles.redText]}>
             25°
           </Text>
 
-          <SearchInput placeholder={"Type any city"}/>
+          <SearchInput 
+            placeholder={"Type any city"}
+            onSubmit={this.updateLocation}
+          />
         </ImageBackground>
         
       </KeyboardAvoidingView>

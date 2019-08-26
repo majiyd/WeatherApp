@@ -1,9 +1,10 @@
 {
   "expoServerPort": 19000,
-  "packagerPort": null,
-  "packagerPid": null,
+  "packagerPort": 19001,
+  "packagerPid": 11412,
   "expoServerNgrokUrl": "https://rk-iwa.anonymous.weatherapp.exp.direct",
   "packagerNgrokUrl": "https://packager.rk-iwa.anonymous.weatherapp.exp.direct",
-  "ngrokPid": 11432,
-  "devToolsPort": 19002
+  "ngrokPid": 14056,
+  "devToolsPort": 19002,
+  "webpackServerPort": null
 }
