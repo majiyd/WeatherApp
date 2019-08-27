@@ -28,13 +28,39 @@ export default class App extends Component {
     this.updateLocation('San Francisco')
     this.setState({weather: "clear"})
   }
+
+  getBackgroundImage = (weather=this.state.weather_abbr) => {
+    switch (weather) {
+      case 'c':
+        return require('./assets/clear.jpg')
+      case 'lc':
+        return require('./assets/light-cloud.jpg')
+      case 'hc':
+        return require('./assets/cloudy.png')
+      case 's':
+        return require('./assets/showers.png')
+      case 'lr':
+        return require('./assets/light-rain.png')
+      case 'hr':
+        return require('./assets/heavy-rain.jpg')
+      case 't':
+        return require('./assets/thunderstorm.png')
+      case 'h':
+        return require('./assets/hail.png')
+      case 'sl':
+        return require('./assets/slate.png')
+      case 'sn':
+        return require('./assets/snow.png')
+      default:
+        return require('./assets/clear.jpg')
+    }
+  }
   updateLocation = city => {
     if (!city) return;
 
     this.setState({loading: true})
     axios.get(`https://www.metaweather.com/api/location/search/?query=${city}`)
       .then(response => {
-        console.log(response.data[0].woeid)
         const locationID = response.data[0].woeid
         axios.get(`https://www.metaweather.com/api/location/${locationID}/`)
         .then(response => {
@@ -58,16 +84,17 @@ export default class App extends Component {
   }
   render() {
     const {location, temperature, weather} = this.state
+    const image = this.getBackgroundImage()
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <ImageBackground 
-          source={require("./assets/clear.jpg") }
+          source={image }
           style={styles.backgroundImageStyle}
         >
           <Text style={[styles.textStyle, styles.largeText]}>{location}</Text>
           <Text style={[styles.textStyle, styles.smallText]}>{weather}</Text>
           <Text style={[styles.textStyle, styles.largeText, styles.redText]}>
-            {temperature}
+            {temperature}°
           </Text>
 
           <SearchInput 
