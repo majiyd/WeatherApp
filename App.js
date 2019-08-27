@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from 'axios'
 import {
   Platform,
   StyleSheet,
@@ -19,7 +20,8 @@ export default class App extends Component {
       loading: false,
       errors: null,
       temperature: 0,
-      weather: ''
+      weather: '',
+      weather_abbr: ''
     }
   }
   componentDidMount = () => {
@@ -27,10 +29,35 @@ export default class App extends Component {
     this.setState({weather: "clear"})
   }
   updateLocation = city => {
-    this.setState({location: city})
+    if (!city) return;
+
+    this.setState({loading: true})
+    axios.get(`https://www.metaweather.com/api/location/search/?query=${city}`)
+      .then(response => {
+        console.log(response.data[0].woeid)
+        const locationID = response.data[0].woeid
+        axios.get(`https://www.metaweather.com/api/location/${locationID}/`)
+        .then(response => {
+          const { the_temp, weather_state_abbr, weather_state_name} = response.data.consolidated_weather[0]
+          this.setState({
+            loading: false,
+            errors: null,
+            location: city,
+            temperature: the_temp,
+            weather: weather_state_name,
+            weather_abbr: weather_state_abbr
+          })
+        })
+      })
+      .catch(error => {
+        this.setState({
+          loading: false,
+          errors: error
+        })
+      })
   }
   render() {
-    const {location} = this.state
+    const {location, temperature, weather} = this.state
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <ImageBackground 
@@ -38,9 +65,9 @@ export default class App extends Component {
           style={styles.backgroundImageStyle}
         >
           <Text style={[styles.textStyle, styles.largeText]}>{location}</Text>
-          <Text style={[styles.textStyle, styles.smallText]}>Light Showers</Text>
+          <Text style={[styles.textStyle, styles.smallText]}>{weather}</Text>
           <Text style={[styles.textStyle, styles.largeText, styles.redText]}>
-            25°
+            {temperature}
           </Text>
 
           <SearchInput 
