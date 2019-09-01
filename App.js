@@ -4,6 +4,7 @@ import {
   Platform,
   StyleSheet,
   Text,
+  View,
   KeyboardAvoidingView,
   ImageBackground,
   ActivityIndicator,
@@ -25,7 +26,7 @@ export default class App extends Component {
     }
   }
   componentDidMount = () => {
-    this.updateLocation('San Francisco')
+    this.updateLocation('Lagos')
     this.setState({weather: "clear"})
   }
 
@@ -83,24 +84,43 @@ export default class App extends Component {
       })
   }
   render() {
-    const {location, temperature, weather} = this.state
+    const {location, temperature, weather, loading, errors} = this.state
     const image = this.getBackgroundImage()
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <StatusBar barStyle="light-content"/>
         <ImageBackground 
           source={image }
           style={styles.backgroundImageStyle}
         >
-          <Text style={[styles.textStyle, styles.largeText]}>{location}</Text>
-          <Text style={[styles.textStyle, styles.smallText]}>{weather}</Text>
-          <Text style={[styles.textStyle, styles.largeText, styles.redText]}>
-            {temperature}°
-          </Text>
+          <View style={styles.detailsContainer}>
+            <ActivityIndicator animating={loading} color="#222823" size="large"/>
 
-          <SearchInput 
-            placeholder={"Type any city"}
-            onSubmit={this.updateLocation}
-          />
+            {!loading && (
+              <View style={{flex: 1, justifyContent: "center",  width: "100%", alignItems: "center"}}>
+                {errors && (
+                  <Text style={[styles.textStyle, styles.smallText]}>Couldn't not load weather, please try again</Text>
+                )}
+
+                {!errors && (
+                  <View >
+                    <Text style={[styles.textStyle, styles.largeText]}>{location}</Text>
+                    <Text style={[styles.textStyle, styles.smallText]}>{weather}</Text>
+                    <Text style={[styles.textStyle, styles.largeText, styles.redText]}>
+                      {Math.round(temperature)}°
+                    </Text>
+                  </View>
+                )}
+                <SearchInput 
+                  placeholder={"Type any city"}
+                  onSubmit={this.updateLocation}
+                />
+              </View>
+            )}
+          </View>
+          
+
+          
         </ImageBackground>
         
       </KeyboardAvoidingView>
@@ -143,6 +163,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     justifyContent: "center",
+    alignItems: "center",
+  },
+  detailsContainer: {
+    flex: 1,
+    justifyContent: "center",
+    width: '100%',
     alignItems: "center",
   }
   

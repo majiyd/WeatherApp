@@ -39,11 +39,11 @@ const styles = StyleSheet.create({
   container: {
     height: 40,
     marginTop: 20,
-    marginHorizontal: 40,
+    // marginHorizontal: 40,
     paddingHorizontal: 10,
     borderRadius: 5,
     backgroundColor: "#666",
-    width: "90%"
+    width: "90%",
   },
   textInput: {
     flex: 1,
